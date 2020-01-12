@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9cdeb3699efe4b148dff3bf906dfd40c" Name="Diagram1">
+        <EntityTypeShape EntityType="QuizModel.Answer" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuizModel.Question" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuizModel.Quiz" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuizModel.QuizHistory" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuizModel.QuizHistoryDetail" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="QuizModel.Question_Answer" ManuallyRouted="false" />
+        <AssociationConnector Association="QuizModel.Quiz_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="QuizModel.QuizHistoryDetail_Question" ManuallyRouted="false" />
+        <AssociationConnector Association="QuizModel.Quiz_QuizHistory" ManuallyRouted="false" />
+        <AssociationConnector Association="QuizModel.QuizHistory_QuizHistoryDetail" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

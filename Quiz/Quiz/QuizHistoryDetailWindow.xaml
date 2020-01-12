@@ -1,0 +1,45 @@
+﻿<Window x:Class="QuizApplication.QuizHistoryDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="QuizHistoryDetailWindow" Height="600" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl x:Name="tabQuestion">
+            <TabItem x:Name="tabitem_correct" IsSelected="True" Header="Correct" Background="LightGray">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer x:Name="sc_Correct" VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                        <StackPanel x:Name="spl_Correct" Orientation="Vertical" Margin="0 20 0 0">
+                        </StackPanel>
+                    </ScrollViewer>
+                    <DockPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="btnCorrect_Prev" Content="Prev" Margin="5 5 20 5" Width="50" Height="20" HorizontalAlignment="Right" Click="btnCorrect_Prev_Click" Visibility="Collapsed"/>
+                            <Button x:Name="btnCorrect_Next" Content="Next" Margin="5 5 20 5" Width="50" Height="20" HorizontalAlignment="Right" Click="btnCorrect_Next_Click" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabitem_wrong" Header="Wrong" Background="LightGray">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollViewer x:Name="sc_Wrong" VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                        <StackPanel x:Name="spl_Wrong" Orientation="Vertical" Margin="0 20 0 0">
+                        </StackPanel>
+                    </ScrollViewer>
+                    <DockPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="btnWrong_Prev" Content="Prev" Margin="5 5 20 5" Width="50" Height="20" HorizontalAlignment="Right" Click="btnWrong_Prev_Click" Visibility="Collapsed"/>
+                            <Button x:Name="btnWrong_Next" Content="Next" Margin="5 5 20 5" Width="50" Height="20" HorizontalAlignment="Right" Click="btnWrong_Next_Click" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

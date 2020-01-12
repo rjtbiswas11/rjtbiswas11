@@ -1,0 +1,24 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:QuizApplication" mc:Ignorable="d" x:Class="QuizApplication.QuizHistoryWindow"
+        Title="Quiz History" Height="300" Width="450" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <CollectionViewSource x:Key="quizHistoryViewSource" d:DesignSource="{d:DesignInstance {x:Type local:QuizHistory}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource quizHistoryViewSource}">
+        <DataGrid x:Name="quizHistoryDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="completedColumn" Binding="{Binding Completed}" Header="" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="correctPercentageColumn" Binding="{Binding CorrectPercentage, StringFormat={}{0} %}" Header="Correct %" Width="*" IsReadOnly="True"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnView_Click">View</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
