@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuizModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="QuizModelStoreContainer">
+          <EntitySet Name="Answer" EntityType="QuizModel.Store.Answer" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="QuizModel.Store.Question" store:Type="Tables" />
+          <EntitySet Name="Quiz" EntityType="QuizModel.Store.Quiz" store:Type="Tables" />
+          <EntitySet Name="QuizHistory" EntityType="QuizModel.Store.QuizHistory" store:Type="Tables" />
+          <EntitySet Name="QuizHistoryDetail" EntityType="QuizModel.Store.QuizHistoryDetail" store:Type="Tables" />
+          <AssociationSet Name="Question_Answer" Association="QuizModel.Store.Question_Answer">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="Quiz_Question" Association="QuizModel.Store.Quiz_Question">
+            <End Role="Quiz" EntitySet="Quiz" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="Quiz_QuizHistory" Association="QuizModel.Store.Quiz_QuizHistory">
+            <End Role="Quiz" EntitySet="Quiz" />
+            <End Role="QuizHistory" EntitySet="QuizHistory" />
+          </AssociationSet>
+          <AssociationSet Name="QuizHistory_QuizHistoryDetail" Association="QuizModel.Store.QuizHistory_QuizHistoryDetail">
+            <End Role="QuizHistory" EntitySet="QuizHistory" />
+            <End Role="QuizHistoryDetail" EntitySet="QuizHistoryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="QuizHistoryDetail_Question" Association="QuizModel.Store.QuizHistoryDetail_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="QuizHistoryDetail" EntitySet="QuizHistoryDetail" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsCorrect" Type="bit" />
+          <Property Name="QuestionID" Type="int" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QuizID" Type="int" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" />
+          <Property Name="Answered" Type="bit" />
+          <Property Name="Correct" Type="bit" />
+        </EntityType>
+        <EntityType Name="Quiz">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Completed" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuizHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QuizID" Type="int" />
+          <Property Name="Completed" Type="int" Nullable="false" />
+          <Property Name="CorrectPercentage" Type="float" />
+        </EntityType>
+        <EntityType Name="QuizHistoryDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="QuizHistoryID" Type="int" />
+          <Property Name="QuestionID" Type="int" />
+          <Property Name="Correct" Type="bit" />
+        </EntityType>
+        <Association Name="Question_Answer">
+          <End Role="Question" Type="QuizModel.Store.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="QuizModel.Store.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Quiz_Question">
+          <End Role="Quiz" Type="QuizModel.Store.Quiz" Multiplicity="0..1" />
+          <End Role="Question" Type="QuizModel.Store.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quiz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuizID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Quiz_QuizHistory">
+          <End Role="Quiz" Type="QuizModel.Store.Quiz" Multiplicity="0..1" />
+          <End Role="QuizHistory" Type="QuizModel.Store.QuizHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quiz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistory">
+              <PropertyRef Name="QuizID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuizHistory_QuizHistoryDetail">
+          <End Role="QuizHistory" Type="QuizModel.Store.QuizHistory" Multiplicity="0..1" />
+          <End Role="QuizHistoryDetail" Type="QuizModel.Store.QuizHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizHistory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistoryDetail">
+              <PropertyRef Name="QuizHistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuizHistoryDetail_Question">
+          <End Role="Question" Type="QuizModel.Store.Question" Multiplicity="0..1" />
+          <End Role="QuizHistoryDetail" Type="QuizModel.Store.QuizHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistoryDetail">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuizModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QuizEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Answer" EntityType="QuizModel.Answer" />
+          <EntitySet Name="Question" EntityType="QuizModel.Question" />
+          <EntitySet Name="Quiz" EntityType="QuizModel.Quiz" />
+          <EntitySet Name="QuizHistory" EntityType="QuizModel.QuizHistory" />
+          <EntitySet Name="QuizHistoryDetail" EntityType="QuizModel.QuizHistoryDetail" />
+          <AssociationSet Name="Question_Answer" Association="QuizModel.Question_Answer">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="Quiz_Question" Association="QuizModel.Quiz_Question">
+            <End Role="Quiz" EntitySet="Quiz" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="QuizHistoryDetail_Question" Association="QuizModel.QuizHistoryDetail_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="QuizHistoryDetail" EntitySet="QuizHistoryDetail" />
+          </AssociationSet>
+          <AssociationSet Name="Quiz_QuizHistory" Association="QuizModel.Quiz_QuizHistory">
+            <End Role="Quiz" EntitySet="Quiz" />
+            <End Role="QuizHistory" EntitySet="QuizHistory" />
+          </AssociationSet>
+          <AssociationSet Name="QuizHistory_QuizHistoryDetail" Association="QuizModel.QuizHistory_QuizHistoryDetail">
+            <End Role="QuizHistory" EntitySet="QuizHistory" />
+            <End Role="QuizHistoryDetail" EntitySet="QuizHistoryDetail" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="IsCorrect" Type="Boolean" />
+          <Property Name="QuestionID" Type="Int32" />
+          <NavigationProperty Name="Question" Relationship="QuizModel.Question_Answer" FromRole="Answer" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizID" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Answered" Type="Boolean" />
+          <Property Name="Correct" Type="Boolean" />
+          <NavigationProperty Name="Answer" Relationship="QuizModel.Question_Answer" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="Quiz" Relationship="QuizModel.Quiz_Question" FromRole="Question" ToRole="Quiz" />
+          <NavigationProperty Name="QuizHistoryDetail" Relationship="QuizModel.QuizHistoryDetail_Question" FromRole="Question" ToRole="QuizHistoryDetail" />
+        </EntityType>
+        <EntityType Name="Quiz">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Completed" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="QuizModel.Quiz_Question" FromRole="Quiz" ToRole="Question" />
+          <NavigationProperty Name="QuizHistory" Relationship="QuizModel.Quiz_QuizHistory" FromRole="Quiz" ToRole="QuizHistory" />
+        </EntityType>
+        <EntityType Name="QuizHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizID" Type="Int32" />
+          <Property Name="Completed" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Quiz" Relationship="QuizModel.Quiz_QuizHistory" FromRole="QuizHistory" ToRole="Quiz" />
+          <NavigationProperty Name="QuizHistoryDetail" Relationship="QuizModel.QuizHistory_QuizHistoryDetail" FromRole="QuizHistory" ToRole="QuizHistoryDetail" />
+          <Property Type="Double" Name="CorrectPercentage" />
+        </EntityType>
+        <EntityType Name="QuizHistoryDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizHistoryID" Type="Int32" />
+          <Property Name="QuestionID" Type="Int32" />
+          <Property Name="Correct" Type="Boolean" />
+          <NavigationProperty Name="Question" Relationship="QuizModel.QuizHistoryDetail_Question" FromRole="QuizHistoryDetail" ToRole="Question" />
+          <NavigationProperty Name="QuizHistory" Relationship="QuizModel.QuizHistory_QuizHistoryDetail" FromRole="QuizHistoryDetail" ToRole="QuizHistory" />
+        </EntityType>
+        <Association Name="Question_Answer">
+          <End Role="Question" Type="QuizModel.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="QuizModel.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Quiz_Question">
+          <End Role="Quiz" Type="QuizModel.Quiz" Multiplicity="0..1" />
+          <End Role="Question" Type="QuizModel.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quiz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuizID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuizHistoryDetail_Question">
+          <End Role="Question" Type="QuizModel.Question" Multiplicity="0..1" />
+          <End Role="QuizHistoryDetail" Type="QuizModel.QuizHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistoryDetail">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Quiz_QuizHistory">
+          <End Role="Quiz" Type="QuizModel.Quiz" Multiplicity="0..1" />
+          <End Role="QuizHistory" Type="QuizModel.QuizHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quiz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistory">
+              <PropertyRef Name="QuizID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuizHistory_QuizHistoryDetail">
+          <End Role="QuizHistory" Type="QuizModel.QuizHistory" Multiplicity="0..1" />
+          <End Role="QuizHistoryDetail" Type="QuizModel.QuizHistoryDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizHistory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuizHistoryDetail">
+              <PropertyRef Name="QuizHistoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuizModelStoreContainer" CdmEntityContainer="QuizEntities">
+          <EntitySetMapping Name="Answer">
+            <EntityTypeMapping TypeName="QuizModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="QuizModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuizID" ColumnName="QuizID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Answered" ColumnName="Answered" />
+                <ScalarProperty Name="Correct" ColumnName="Correct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quiz">
+            <EntityTypeMapping TypeName="QuizModel.Quiz">
+              <MappingFragment StoreEntitySet="Quiz">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuizHistory">
+            <EntityTypeMapping TypeName="QuizModel.QuizHistory">
+              <MappingFragment StoreEntitySet="QuizHistory">
+                <ScalarProperty Name="CorrectPercentage" ColumnName="CorrectPercentage" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuizID" ColumnName="QuizID" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuizHistoryDetail">
+            <EntityTypeMapping TypeName="QuizModel.QuizHistoryDetail">
+              <MappingFragment StoreEntitySet="QuizHistoryDetail">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuizHistoryID" ColumnName="QuizHistoryID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="Correct" ColumnName="Correct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
